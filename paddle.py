@@ -1,0 +1,73 @@
+import pygame
+BLACK = (0,0,0)
+ 
+class Paddle(pygame.sprite.Sprite):
+    #This class represents a car. It derives from the "Sprite" class in Pygame.
+    
+    def __init__(self, color, width, height, SIZEY):
+        # Call the parent class (Sprite) constructor
+        super().__init__()
+        
+        self.SIZEY = SIZEY
+        self.size = height
+        
+        # Pass in the color of the car, and its x and y position, width and height.
+        # Set the background color and set it to be transparent
+        self.image = pygame.Surface([width, height])
+        self.image.fill(BLACK)
+        self.image.set_colorkey(BLACK)
+ 
+        # Draw the paddle (a rectangle!)
+        pygame.draw.rect(self.image, color, [0, 0, width, height])
+        
+        # Fetch the rectangle object that has the dimensions of the image.
+        self.rect = self.image.get_rect()
+
+    def moveUp(self, pixels):
+        self.rect.y -= pixels
+        #Check that you are not going too far (off the screen)
+        if self.rect.y < 11:
+          self.rect.y = 11
+        if self.rect.y > 471-self.size:
+          self.rect.y = 471-self.size
+          
+    def moveDown(self, pixels):
+        self.rect.y += pixels
+    #Check that you are not going too far (off the screen)
+        if self.rect.y < 11:
+          self.rect.y = 11
+        if self.rect.y > 471-self.size:
+          self.rect.y = 471-self.size
+          
+    def padY(self):
+        return self.rect.y
+    
+    #change the size of the paddle
+    def changeSize(self, liste, change):
+        oldY = self.rect.y
+        oldX = self.rect.x
+        self.size += change
+        if(self.size<63) :
+            self.size = 63
+        self.image = pygame.Surface([10, self.size])
+        self.image.fill(BLACK)
+        self.image.set_colorkey(BLACK)
+        pygame.draw.rect(self.image, (255,255,255), [0, 0, 10, self.size])
+        self.rect = self.image.get_rect()
+        self.rect.x = oldX
+        self.rect.y = oldY-change/2
+        liste.add(self)
+
+    def reset(self, liste):
+        oldY = self.rect.y
+        oldX = self.rect.x
+        changeSize = 99-self.size
+        self.size = 99
+        self.image = pygame.Surface([10, self.size])
+        self.image.fill(BLACK)
+        self.image.set_colorkey(BLACK)
+        pygame.draw.rect(self.image, (255,255,255), [0, 0, 10, self.size])
+        self.rect = self.image.get_rect()
+        self.rect.x = oldX
+        self.rect.y = oldY-changeSize/2
+        liste.add(self)
