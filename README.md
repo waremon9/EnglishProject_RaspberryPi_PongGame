@@ -1,4 +1,5 @@
 # EnglishProject_RaspberryPi_PongGame
+September 2019
 Pong Game on Raspberry pi Touchscreen. made with Duport Quentin and Touhardji Hamza
 
 English project in wich we had to make something on the Raspberry Pi Touchscreen.
